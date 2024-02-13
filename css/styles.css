@@ -1,0 +1,23 @@
+#nav-main {
+    display: flex;
+    border: red solid;
+    justify-content: space-between;
+}
+#nav-logo {
+    display: flex;
+    border: blue solid;
+    margin-left: 10px;
+}
+#nav-menu {
+    border: purple solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    width: 175px;
+}
+#nav-menu a {
+    border: orange solid;
+    display: inline-block;
+    margin-right: 10px;
+}
