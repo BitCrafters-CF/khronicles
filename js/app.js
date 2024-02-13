@@ -3,13 +3,18 @@
 let Dice = Math.random();
 console.log(Dice);
 
-function Character(Character_Name, Weapon) {
+function Character(Character_Name, Weapon, HealthPoints, Gold, xp, Player_Level) {
     this.Character_Name = Character_Name,
     this.Weapon = Weapon
+    this.HealthPoints = HealthPoints;
+    this.Gold = Gold;
+    this.xp = xp;
+    this.Player_Level = Player_Level;
 }
 
-let Game_Image_Array = ['img/images/admir.jpg', 'img/images/bkg-1,jpg', 'img/images/bkg-2.jpg', 'img/images/bkg-3.jpg', 'img/images/bkg-4.jpg', 'img/images/hajduk.jpg', 'img/images/mamluk.jpg', 'img/images/sulta.jpg', 'img/images/tabib.png']; //Array for the image files
 let Weapons_Array = ['staff', 'sword', 'hammer', 'dagger'] // Array for the weapons
+
+const PlayerCharacter = new Character('Bob', Weapons_Array[0], 10, 10, 0, 1);
 
 function Render_Image(image) {
     let Image_Container = document.getElementById('dynamic-image');
@@ -37,18 +42,18 @@ function Render_Game_Text(text){
     Game_Text_Field.appendChild(Game_Text);
 }
 
-function Render_Stats(){
+function Render_Stats(stats){
     let Stats_Field = document.getElementById('character-stats');
     let Stats = document.createElement('p');
-    Stats.textContent = 'THESE ARE STATS';
+    Stats.textContent = `Name: ${PlayerCharacter.Character_Name}, Level: ${PlayerCharacter.Player_Level}, XP: ${PlayerCharacter.xp}`;
     Stats_Field.appendChild(Stats);
 }
 
 function Encounter(){
-    Render_Image(Game_Image_Array[0]);
+    Render_Image('img/images/Monster3.jpg');
+    Render_Game_Text('A monster is attacking the town! What will you do?');
     Render_Buttons();
-    Render_Stats();
-    Render_Game_Text("Hello world!");
+    Render_Stats('Test Stats');
 }
 
 Encounter();
