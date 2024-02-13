@@ -4,4 +4,4 @@ About Khronicles: Khronicles is a text based adventure game created to demonstra
 
 ## Domain Model ##
 
-(Domain Model)[/img/images/domain.model.png]
+(Domain Model)[/img/images/domain-model.png]
