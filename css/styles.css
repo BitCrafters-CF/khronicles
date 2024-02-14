@@ -37,6 +37,10 @@
 #game-text p {
     display: flex;
     justify-content: center;
+    font-family: 'Arial Black', sans-serif; /* Example of a bold font */
+    font-size: 24px; /* Example font size */
+    color: rgb(92, 15, 14); /* Example text color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Example text shadow */
 }
 #character-stats {
     grid-column: 2 / 8;
@@ -50,6 +54,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    
 }
 #game-buttons button {
     display: flex;
@@ -63,10 +68,10 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    justify-content: center;
-    transition: background-color, 1s ease;
-    animation: ease-in-out;
-    /* transition: transform 0.3s ease-in-out; */
+    justify-content: center;    
+    transition: background-color 0.7s ease-in-out; /* Adjusted */
+    
+
 }
 /* @keyframes shakeAnimation {
     0%, 100% {
@@ -77,11 +82,14 @@
     }
     40%, 100% {
       transform: rotate3d(0, 0, 1, 10deg);
-    }
-  } */
+    } */
+  /* } */
 #game-buttons button:hover {
     background-color: rgb(122, 24, 24);
     animation: scale(1.5);
+    transform: scale(1.1);
+
+    
 }
 #dynamic-image {
     grid-column: 2 / 4;
