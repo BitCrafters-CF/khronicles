@@ -1,16 +1,17 @@
 #nav-main {
     display: flex;
-    border: red solid;
     justify-content: space-between;
     background-color: black;
+    border-radius: 10px;
 }
 #nav-logo {
     display: flex;
-    border: blue solid;
-    margin-left: 10px;
+    margin: 10px;
+}
+#nav-logo img {
+    border-radius: 3px;
 }
 #nav-menu {
-    border: purple solid;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -18,7 +19,6 @@
     width: 175px;
 }
 #nav-menu a {
-    border: orange solid;
     display: inline-block;
     margin-right: 10px;
     color: white;
@@ -27,10 +27,11 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    border: black solid;
+    margin-top: 20px;
+    background-color: rgb(122, 24, 24);
+    border-radius: 10px;
 }
 #game-text {
-    border: orange solid;
     grid-column: 2 / 8;
 }
 #game-text p {
@@ -38,7 +39,6 @@
     justify-content: center;
 }
 #character-stats {
-    border: brown solid;
     grid-column: 2 / 8;
 }
 #character-stats {
@@ -46,7 +46,6 @@
     justify-content: center;
 }
 #game-buttons {
-    border: yellow solid;
     grid-column: 2 / 8;
     width: 100%;
     display: flex;
@@ -58,17 +57,31 @@
     width: 200px;
     margin: 10px;
     padding: 10px 20px;
-    background-color: #fdcb04;
-    color: black;
+    background-color: black;
+    color: white;
     font-weight: bold;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     justify-content: center;
-    transition: background-color 1s ease;
+    transition: background-color, 1s ease;
+    animation: ease-in-out;
+    /* transition: transform 0.3s ease-in-out; */
 }
+/* @keyframes shakeAnimation {
+    0%, 100% {
+      transform: none;
+    }
+    20%, 60%, 80% {
+      transform: rotate3d(0, 0, 1, -10deg);
+    }
+    40%, 100% {
+      transform: rotate3d(0, 0, 1, 10deg);
+    }
+  } */
 #game-buttons button:hover {
-    background-color: #10b0f5;
+    background-color: rgb(122, 24, 24);
+    animation: scale(1.5);
 }
 #dynamic-image {
     grid-column: 2 / 4;
@@ -82,8 +95,9 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    border: black solid;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 10px;
     grid-row-gap: 20px;
+    background-color: rgb(219, 163, 72);
+    border-radius: 10px;
 }
