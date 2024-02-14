@@ -55,7 +55,7 @@ function Render_Game_Text(text){
     Game_Text_Field.appendChild(Game_Text);
 }
 
-function Render_Stats(stats){
+function Render_Stats(){
     let Stats_Field = document.getElementById('character-stats');
     let Stats = document.createElement('p');
     Stats.textContent = `Name: ${PlayerCharacter.Character_Name}, Level: ${PlayerCharacter.Player_Level}, XP: ${PlayerCharacter.xp}`;
@@ -68,3 +68,5 @@ function Encounter(){
     Render_Buttons();
     Render_Stats('Test Stats');
 }
+
+Encounter();

@@ -48,10 +48,10 @@
     grid-column: 2 / 8;
     display: flex;
     justify-content: center;
-    font-family: 'Arial Black', sans-serif; /* Example of a bold font */
-    font-size: 24px; /* Example font size */
-    color: rgb(92, 15, 14); /* Example text color */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Example text shadow */
+    font-family: 'Arial Black', sans-serif; 
+    font-size: 24px; 
+    color: rgb(92, 15, 14); 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
 #game-buttons {
     grid-column: 2 / 8;
@@ -71,12 +71,9 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    justify-content: center;    
-    transition: background-color 0.7s ease-in-out; /* Adjusted */
-    
-
+    justify-content: center;
+    transition: background-color 0.7s ease-in-out; 
 }
-
 #game-buttons button:hover {
     background-color: rgb(122, 24, 24);
     animation: scale(1.5);
