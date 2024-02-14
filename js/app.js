@@ -55,15 +55,3 @@ function Encounter(){
     Render_Buttons();
     Render_Stats('Test Stats');
 }
-
-Encounter();
-
-const shakingElement = document.getElementById('game-buttons');
-
-shakingElement.addEventListener('mouseenter', function() {
-  this.classList.add('shaking');
-});
-
-shakingElement.addEventListener('animationend', function() {
-  this.classList.remove('shaking');
-});
