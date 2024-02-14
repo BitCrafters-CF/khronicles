@@ -71,9 +71,12 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    justify-content: center;
+    justify-content: center;    
     transition: background-color 0.7s ease-in-out; /* Adjusted */
+    
+
 }
+
 #game-buttons button:hover {
     background-color: rgb(122, 24, 24);
     animation: scale(1.5);

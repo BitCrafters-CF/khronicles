@@ -68,5 +68,3 @@ function Encounter(){
     Render_Buttons();
     Render_Stats('Test Stats');
 }
-
-Encounter();
