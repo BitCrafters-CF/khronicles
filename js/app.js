@@ -50,8 +50,10 @@ function renderButtons() {
       button.onclick = () => {
         if (action === 'Attack') {
           attack();
+        } else if (action === 'Run') {
+          run();
         }
-        // Future implementation for Dodge and Run
+        // Future implementation for Dodge
       };
       buttonField.appendChild(button);
     });
@@ -95,52 +97,88 @@ function gameOver(isVictory) {
 
 function resetGame() {
   playerCharacter = new Character('Bob', 10, 10, 0, 1);
-  currentMonster = new Monster('Giant', 15, 20, 5); // Adjust monster as needed
+  currentMonster = new Monster('Giant', 15, 20, 5);
   gameState = 'attack';
 
-  encounter(); // Reinitialize game setup
+  encounter();
 }
 
-// Player's attack function
+function run() {
+  const diceRoll = dice(1, 6);
+  if (diceRoll >= 4) {
+    renderGameText("You have successfully run away!");
+    renderNewGameButton();
+  } else {
+    renderGameText("You failed to run away. Monster's turn!");
+    renderNextButton('Monster Turn', monsterAttack);
+  }
+}
+
+function renderNewGameButton() {
+  const buttonField = document.getElementById('game-buttons');
+  buttonField.innerHTML = '';
+
+  const newGameButton = document.createElement('button');
+  newGameButton.textContent = 'New Game';
+  newGameButton.onclick = resetGame;
+  buttonField.appendChild(newGameButton);
+}
+
 function attack() {
     const diceRoll = dice(1, 6);
     const accuracyThreshold = 10 + playerCharacter.level;
     const defense = currentMonster.level;
   
     if (diceRoll + accuracyThreshold > defense) {
-      const damage = dice(1, 4) + playerCharacter.level;
-      currentMonster.healthPoints -= damage;
-      renderGameText(`You've attacked the ${currentMonster.name} for ${damage} damage!`);
+        const damage = dice(1, 4) + playerCharacter.level;
+        currentMonster.healthPoints = Math.max(0, currentMonster.healthPoints - damage); // Prevent monster health from going below 0
+        renderGameText(`You've attacked the ${currentMonster.name} for ${damage} damage!`);
+    
+        if (currentMonster.healthPoints <= 0) {
+          renderGameText('You have defeated the monster!'); // Monster defeated!
+          renderNewGameButton(); // Display the "New Game" button
+          return; // End the turn sequence
+        }
     } else {
       renderGameText(`You missed the ${currentMonster.name}!`);
     }
-    renderNextButton('Monster Turn', monsterAttack); // Renders a button to proceed to monster's turn
+  
+    // Remove previous action buttons
+    document.getElementById('game-buttons').innerHTML = ''; 
+  
+    // Initiate the monster's turn with a 'Next' button
+    renderNextButton('Next', monsterPhase); 
   }
   
-  // Monster's attack function, modified to be triggered by "Monster Turn" button
-  function monsterAttack() {
-    renderGameText(''); // Clear previous game text or append monster attack text
-    const damage = dice(1, 4); // Simplified damage calculation for the monster
-    // Assuming monster always hits for simplification, add hit/miss logic as needed
-    playerCharacter.healthPoints -= damage;
-    renderGameText(`The ${currentMonster.name} attacks you for ${damage} damage!`);
-    
-    renderNextButton('End Turn', renderButtons); // Renders "End Turn" button to reset for player's next turn
+  function monsterPhase() {
+    // Remove the 'Next' button
+    document.getElementById('game-buttons').innerHTML = ''; 
+  
+    const damage = dice(1, 4);
+  playerCharacter.healthPoints = Math.max(0, playerCharacter.healthPoints - damage); // Prevent player health from going below 0
+  renderGameText(`The ${currentMonster.name} attacks you for ${damage} damage!`);
+
+  if (playerCharacter.healthPoints <= 0) {
+    renderGameText('You have been defeated!'); // Player defeated
+    renderNewGameButton(); // Display the "New Game" button
+    return; // End the turn sequence
   }
   
-  // Utility function to render a next step button with customizable label and action
-  function renderNextButton(label, action) {
-    const buttonField = document.getElementById('game-buttons');
-    buttonField.innerHTML = ''; // Clear existing buttons
-  
-    const nextButton = document.createElement('button');
-    nextButton.textContent = label;
-    nextButton.addEventListener('click', action);
-    buttonField.appendChild(nextButton);
+    // Update the stats before returning the player to actions
+    renderStats();  
+    renderNextButton('Next', renderButtons); 
   }
-  
-  // Modification to the reset or continuation logic may be required to fit this flow
-  
+
+function renderNextButton(label, action) {
+  const buttonField = document.getElementById('game-buttons');
+  buttonField.innerHTML = '';
+
+  const nextButton = document.createElement('button');
+  nextButton.textContent = label;
+  nextButton.addEventListener('click', action);
+  buttonField.appendChild(nextButton);
+}
+
 function encounter() {
   renderImage('img/images/Monster3.jpg');
   renderGameText('A monster is attacking the town! What will you do?');
@@ -148,5 +186,4 @@ function encounter() {
   renderStats();
 }
 
-// Start the encounter
 encounter();
