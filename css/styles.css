@@ -37,17 +37,21 @@
 #game-text p {
     display: flex;
     justify-content: center;
+    font-family: "Caveat", cursive;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 30px;
+    margin-top: 20px;
+}
+#character-stats {
+    grid-column: 2 / 8;
+    display: flex;
+    justify-content: center;
     font-family: 'Arial Black', sans-serif; /* Example of a bold font */
     font-size: 24px; /* Example font size */
     color: rgb(92, 15, 14); /* Example text color */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Example text shadow */
-}
-#character-stats {
-    grid-column: 2 / 8;
-}
-#character-stats {
-    display: flex;
-    justify-content: center;
 }
 #game-buttons {
     grid-column: 2 / 8;
@@ -73,17 +77,7 @@
     
 
 }
-/* @keyframes shakeAnimation {
-    0%, 100% {
-      transform: none;
-    }
-    20%, 60%, 80% {
-      transform: rotate3d(0, 0, 1, -10deg);
-    }
-    40%, 100% {
-      transform: rotate3d(0, 0, 1, 10deg);
-    } */
-  /* } */
+
 #game-buttons button:hover {
     background-color: rgb(122, 24, 24);
     animation: scale(1.5);
