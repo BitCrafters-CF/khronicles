@@ -65,23 +65,30 @@
     cursor: pointer;
     justify-content: center;
     transition: background-color, 1s ease;
-    animation: ease-in-out;
+    animation: shakeAnimation 1s ease forwards;
     /* transition: transform 0.3s ease-in-out; */
 }
-/* @keyframes shakeAnimation {
-    0%, 100% {
-      transform: none;
-    }
-    20%, 60%, 80% {
-      transform: rotate3d(0, 0, 1, -10deg);
-    }
-    40%, 100% {
-      transform: rotate3d(0, 0, 1, 10deg);
-    }
-  } */
 #game-buttons button:hover {
     background-color: rgb(122, 24, 24);
-    animation: scale(1.5);
+    /* animation: scale(1.5); */
+}
+.shaking:hover {
+  animation: shakeAnimation 1s ease forwards;
+}
+
+@keyframes shakeAnimation {
+  0%, 100% {
+    transform: none;
+  }
+  20%, 60%, 80% {
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+  40%, 100% {
+    transform: rotate3d(0, 0, 1, 10deg);
+  }
+  0%, 100% {
+    transform: none;
+  }
 }
 #dynamic-image {
     grid-column: 2 / 4;

@@ -57,3 +57,13 @@ function Encounter(){
 }
 
 Encounter();
+
+const shakingElement = document.getElementById('game-buttons');
+
+shakingElement.addEventListener('mouseenter', function() {
+  this.classList.add('shaking');
+});
+
+shakingElement.addEventListener('animationend', function() {
+  this.classList.remove('shaking');
+});
