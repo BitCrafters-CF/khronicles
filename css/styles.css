@@ -1,15 +1,17 @@
 #nav-main {
     display: flex;
-    border: red solid;
     justify-content: space-between;
+    background-color: black;
+    border-radius: 10px;
 }
 #nav-logo {
     display: flex;
-    border: blue solid;
-    margin-left: 10px;
+    margin: 10px;
+}
+#nav-logo img {
+    border-radius: 3px;
 }
 #nav-menu {
-    border: purple solid;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -17,7 +19,81 @@
     width: 175px;
 }
 #nav-menu a {
-    border: orange solid;
     display: inline-block;
     margin-right: 10px;
+    color: white;
+}
+#game-image {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    margin-top: 20px;
+    background-color: rgb(122, 24, 24);
+    border-radius: 10px;
+}
+#game-text {
+    grid-column: 2 / 8;
+}
+#game-text p {
+    display: flex;
+    justify-content: center;
+    font-family: "Caveat", cursive;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 30px;
+    margin-top: 20px;
+}
+#character-stats {
+    grid-column: 2 / 8;
+    display: flex;
+    justify-content: center;
+    font-family: 'Arial Black', sans-serif; /* Example of a bold font */
+    font-size: 24px; /* Example font size */
+    color: rgb(92, 15, 14); /* Example text color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Example text shadow */
+}
+#game-buttons {
+    grid-column: 2 / 8;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+#game-buttons button {
+    display: flex;
+    flex-direction: row;
+    width: 200px;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    justify-content: center;
+    transition: background-color 0.7s ease-in-out; /* Adjusted */
+}
+#game-buttons button:hover {
+    background-color: rgb(122, 24, 24);
+    animation: scale(1.5);
+    transform: scale(1.1);
+}
+#dynamic-image {
+    grid-column: 2 / 4;
+    grid-row: 1 / 3;
+}
+#dynamic-image img {
+    width: 100%;
+    height: 100%;
+}
+#game-window {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    margin-top: 20px;
+    margin-bottom: 10px;
+    grid-row-gap: 20px;
+    background-color: rgb(219, 163, 72);
+    border-radius: 10px;
 }
