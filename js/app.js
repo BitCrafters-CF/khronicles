@@ -51,9 +51,7 @@ function Render_Stats(stats){
 
 function Encounter(){
     Render_Image('img/images/Monster3.jpg');
-    Render_Game_Text('Beware the Beast! Join the Fight to Protect our Town from this Monstrous Threat! What will you do?');
+    Render_Game_Text('A monster is attacking the town! What will you do?');
     Render_Buttons();
     Render_Stats('Test Stats');
 }
-
-Encounter();
