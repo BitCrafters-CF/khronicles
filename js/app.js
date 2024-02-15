@@ -171,52 +171,55 @@ function encounter() {
   renderStats();
 }
 
+
 // Define character images
 const characterImages = [
-  'img/images/character1.jpg',
-  'img/images/character2.jpg',
-  'img/images/character3.jpg',
-  'img/images/character4.jpg'
+    'img/images/CharacterHajduk.jpg',
+    'img/images/CharacterAdmir.jpg',
+    'img/images/CharacterKahuna.jpg',
+    'img/images/CharacterMamluk.jpg'
 ];
 
 // Render character selection interface
 function renderCharacterSelection() {
-  const characterSelectionDiv = document.createElement('div');
-  characterSelectionDiv.id = 'character-selection';
-  
-  const h2 = document.createElement('h2');
-  h2.textContent = 'Select Your Character';
-  characterSelectionDiv.appendChild(h2);
-  
-  const characterImagesDiv = document.createElement('div');
-  characterImagesDiv.id = 'character-images';
-  characterImages.forEach(image => {
-      const img = document.createElement('img');
-      img.src = image;
-      img.alt = 'Character';
-      img.onclick = function() {
-          selectCharacter(image);
-      };
-      characterImagesDiv.appendChild(img);
-  });
-  characterSelectionDiv.appendChild(characterImagesDiv);
+    const characterSelectionDiv = document.createElement('div');
+    characterSelectionDiv.id = 'character-selection';
+    
+    const h2 = document.createElement('h2');
+    h2.textContent = 'Select Your Character';
+    characterSelectionDiv.appendChild(h2);
+    
+    const characterImagesDiv = document.createElement('div');
+    characterImagesDiv.id = 'character-images';
+    characterImages.forEach(image => {
+        const img = document.createElement('img');
+        img.src = image;
+        img.alt = 'Character';
+        img.onclick = function() {
+            selectCharacter(image);
+        };
+        characterImagesDiv.appendChild(img);
+    });
+    characterSelectionDiv.appendChild(characterImagesDiv);
 
-  const playerNameLabel = document.createElement('label');
-  playerNameLabel.setAttribute('for', 'player-name');
-  playerNameLabel.textContent = 'Enter your name: ';
-  characterSelectionDiv.appendChild(playerNameLabel);
+    const playerNameLabel = document.createElement('label');
+    playerNameLabel.setAttribute('for', 'player-name');
+    playerNameLabel.textContent = 'Enter your name: ';
+    characterSelectionDiv.appendChild(playerNameLabel);
 
-  const playerNameInput = document.createElement('input');
-  playerNameInput.type = 'text';
-  playerNameInput.id = 'player-name';
-  characterSelectionDiv.appendChild(playerNameInput);
+    const playerNameInput = document.createElement('input');
+    playerNameInput.type = 'text';
+    playerNameInput.id = 'player-name';
+    characterSelectionDiv.appendChild(playerNameInput);
 
-  const startGameButton = document.createElement('button');
-  startGameButton.textContent = 'Start Game';
-  startGameButton.onclick = startGame;
-  characterSelectionDiv.appendChild(startGameButton);
+    const startGameButton = document.createElement('button');
+    startGameButton.textContent = 'Start Game';
+    startGameButton.onclick = startGame;
+    characterSelectionDiv.appendChild(startGameButton);
 
-  document.body.appendChild(characterSelectionDiv);
+    const gameWindow = document.getElementById('game-window');
+    gameWindow.innerHTML = ''; // Clear existing content
+    gameWindow.appendChild(characterSelectionDiv);
 }
 
 // Initialize character selection interface
@@ -227,19 +230,21 @@ let playerName = '';
 
 // Function to select a character
 function selectCharacter(image) {
-  selectedCharacter = image;
+    selectedCharacter = image;
 }
 
 // Function to start the game
 function startGame() {
-  playerName = document.getElementById('player-name').value;
-  if (!playerName) {
-      alert('Please enter your name.');
-      return;
-  }
-  if (!selectedCharacter) {
-      alert('Please select a character.');
-      return;
-  } }
+    playerName = document.getElementById('player-name').value;
+    if (!playerName) {
+        alert('Please enter your name.');
+        return;
+    }
+    if (!selectedCharacter) {
+        alert('Please select a character.');
+        return;
+    }
+
+}
 
 encounter();
