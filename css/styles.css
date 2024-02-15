@@ -1,36 +1,66 @@
+/* body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+} */
 #nav-main {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     background-color: black;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    height: fit-content;
+    padding-top: 20px;
+    padding-bottom: none;
 }
 #nav-logo {
+    grid-column: 1 / 2;
     display: flex;
-    margin: 10px;
+    justify-content: center;
 }
 #nav-logo img {
-    border-radius: 3px;
-    width: 100px;
+    max-width: 100%;
 }
 #nav-logo-header {
+    grid-column: 2 / 5;
     display: flex;
+    justify-content: center;
+}
+#nav-logo-header img {
+    max-width: 100%;
+}
+@media screen and (max-width: 850px) {
+    max-height: 100px;
 }
 #nav-menu {
+    grid-column: 5 / 6;
+    height: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    align-self: center;
-    width: fit-content;
+    margin-right: 20px;
 }
 #nav-menu a {
-    display: inline-block;
-    margin-right: 20px;
+    display: flex;
     color: white;
+    justify-content: right;
     font-family: "Caveat Brush", cursive;
     font-weight: 400;
     font-style: normal;
     font-size: 20px;
+}
+#nav-quote {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    color: rgb(219, 163, 72);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-family: "Caveat Brush", cursive;
+    font-weight: thin;
+    font-style: thin;
+    font-size: 20px;
+    margin-top: none;
+    height: fit-content;
 }
 #game-image {
     display: grid;
@@ -109,4 +139,12 @@
     grid-row-gap: 20px;
     background-color: rgb(219, 163, 72);
     border-radius: 10px;
+}
+footer {
+    display: flex;
+    justify-content: center;
+    font-family: "Caveat Brush", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 15px;
 }
