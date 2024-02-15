@@ -1,18 +1,20 @@
 'use strict';
+
 function dice(min, max) {
-    const minCeil = Math.ceil(min);
-    const maxFloor = Math.floor(max);
-    return Math.floor(Math.random() * (maxFloor - minCeil + 1) + minCeil);
+    return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + Math.ceil(min));
 }
+
 class Character {
-    constructor(name, healthPoints, gold, xp, level) {
+    constructor(name, healthPoints, gold, xp, level, image) {
         this.name = name;
         this.healthPoints = healthPoints;
         this.gold = gold;
         this.xp = xp;
         this.level = level;
+        this.image = image; // Added to hold the character image path
     }
 }
+
 class Monster {
     constructor(name, healthPoints, gold, level) {
         this.name = name;
@@ -21,158 +23,12 @@ class Monster {
         this.level = level;
     }
 }
-let playerCharacter = new Character('Bob', 10, 10, 0, 1);
+
+let playerCharacter = new Character('Hero', 10, 10, 0, 1, '');
 let currentMonster = new Monster('Giant', 15, 20, 5);
-let gameState = 'attack';
-function renderImage(image) {
-    const imageContainer = document.getElementById('dynamic-image');
-    imageContainer.innerHTML = '';
-    const img = document.createElement('img');
-    img.src = image;
-    img.alt = 'Dynamic Scene';
-    imageContainer.appendChild(img);
-}
-function renderButtons() {
-    const buttonField = document.getElementById('game-buttons');
-    buttonField.innerHTML = '';
-    if (gameState === 'attack') {
-        const buttonFunctions = ['Attack', 'Run'];
-        buttonFunctions.forEach(action => {
-            const button = document.createElement('button');
-            button.textContent = action;
-            button.onclick = () => {
-                if (action === 'Attack') {
-                    attack();
-                } else if (action === 'Run') {
-                    run();
-                }
-            };
-            buttonField.appendChild(button);
-        });
-    }
-}
-function renderGameText(text) {
-  const gameTextField = document.getElementById('game-text');
-  gameTextField.innerHTML = '';
-  const gameText = document.createElement('p');
-  gameText.textContent = text;
-  gameTextField.appendChild(gameText);
-}
-function renderStats() {
-  const statsField = document.getElementById('character-stats');
-  statsField.innerHTML = '';
+let gameState = 'start'; // Initial state is 'start'
+let playerName = '';
 
-
-  const playerStats = document.createElement('p');
-  playerStats.textContent = `Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}`;
-  statsField.appendChild(playerStats);
-
-
-  if (currentMonster) {
-    const monsterStats = document.createElement('p');
-    monsterStats.textContent = `Monster - Name: ${currentMonster.name}, Level: ${currentMonster.level}, HP: ${currentMonster.healthPoints}, Gold: ${currentMonster.gold}`;
-    statsField.appendChild(monsterStats);
-  }
-}
-function gameOver(isVictory) {
-  document.getElementById('game-buttons').innerHTML = '';
-  document.getElementById('character-stats').innerHTML = '';
-  // Display relevant image
-  if (isVictory) {
-    renderImage('img/images/VictoryScroll.jpg');
-    renderGameText('Congratulations! You won!');
-  } else {
-
-    renderImage('img/images/WeaponKilij.jpg'); 
-
-    renderImage('img/images/MonsterDefeated.jpg');
-
-    renderGameText('Game Over. You were defeated.');
-  }
-  const playAgainButton = document.createElement('button');
-  playAgainButton.textContent = 'Play Again';
-  playAgainButton.onclick = resetGame;
-  document.getElementById('game-buttons').appendChild(playAgainButton);
-}
-function resetGame() {
-  playerCharacter = new Character('Bob', 10, 10, 0, 1);
-  currentMonster = new Monster('Giant', 15, 20, 5);
-  gameState = 'attack';
-  encounter();
-}
-function run() {
-  const diceRoll = dice(1, 6);
-  if (diceRoll >= 4) {
-    renderGameText("You have successfully run away!");
-    renderImage('img/images/RunningFromMonsterHajduk.jpg');
-    renderNewGameButton();
-  } else {
-    renderGameText("You failed to run away. Monster's turn!");
-    renderNextButton('Monster Turn', monsterAttack);
-  }
-}
-function renderNewGameButton() {
-  const buttonField = document.getElementById('game-buttons');
-  buttonField.innerHTML = '';
-  const newGameButton = document.createElement('button');
-  newGameButton.textContent = 'New Game';
-  newGameButton.onclick = resetGame;
-  buttonField.appendChild(newGameButton);
-}
-function attack() {
-    const diceRoll = dice(1, 6);
-    const accuracyThreshold = 10 + playerCharacter.level;
-    const defense = currentMonster.level;
-    if (diceRoll + accuracyThreshold > defense) {
-        const damage = dice(1, 4) + playerCharacter.level;
-        currentMonster.healthPoints = Math.max(0, currentMonster.healthPoints - damage); // Prevent monster health from going below 0
-        renderGameText(`You've attacked the ${currentMonster.name} for ${damage} damage!`);
-        renderImage('img/images/FightingMonsterHajduk.jpg');
-        if (currentMonster.healthPoints <= 0) {
-          renderGameText('You have defeated the monster!');
-          gameOver(true);  // Call gameOver with 'true' for victory
-          return;
-        }
-    } else {
-      renderGameText(`You missed the ${currentMonster.name}!`);
-    }
-    // Remove previous action buttons
-    document.getElementById('game-buttons').innerHTML = '';
-    // Initiate the monster's turn with a 'Next' button
-    renderNextButton('Next', monsterPhase);
-  }
-  function monsterPhase() {
-    // Remove the 'Next' button
-    document.getElementById('game-buttons').innerHTML = '';
-    const damage = dice(1, 4);
-    playerCharacter.healthPoints = Math.max(0, playerCharacter.healthPoints - damage); // Prevent player health from going below 0
-    renderGameText(`The ${currentMonster.name} attacks you for ${damage} damage!`);
-    if (playerCharacter.healthPoints <= 0) {
-      renderGameText('You have been defeated!');
-      gameOver(false); // Call gameOver with 'false' for defeat
-      return;
-    }
-    // Update the stats before returning the player to actions
-    renderStats();
-    renderNextButton('Next', renderButtons);
-  }
-function renderNextButton(label, action) {
-  const buttonField = document.getElementById('game-buttons');
-  buttonField.innerHTML = '';
-  const nextButton = document.createElement('button');
-  nextButton.textContent = label;
-  nextButton.addEventListener('click', action);
-  buttonField.appendChild(nextButton);
-}
-function encounter() {
-  renderImage('img/images/Monster3.jpg');
-  renderGameText('A monster is attacking the town! What will you do?');
-  renderButtons();
-  renderStats();
-}
-
-
-// Define character images
 const characterImages = [
     'img/images/CharacterHajduk.jpg',
     'img/images/CharacterAdmir.jpg',
@@ -180,71 +36,172 @@ const characterImages = [
     'img/images/CharacterMamluk.jpg'
 ];
 
-// Render character selection interface
-function renderCharacterSelection() {
-    const characterSelectionDiv = document.createElement('div');
-    characterSelectionDiv.id = 'character-selection';
-    
-    const h2 = document.createElement('h2');
-    h2.textContent = 'Select Your Character';
-    characterSelectionDiv.appendChild(h2);
-    
-    const characterImagesDiv = document.createElement('div');
-    characterImagesDiv.id = 'character-images';
-    characterImages.forEach(image => {
+// DOM element retrieval
+const gameWindow = document.getElementById('game-window');
+const imageContainer = document.getElementById('dynamic-image');
+const gameTextField = document.getElementById('game-text');
+const buttonField = document.getElementById('game-buttons');
+const statsField = document.getElementById('character-stats');
+
+function renderImage(image) {
+    if (imageContainer) {
+        imageContainer.innerHTML = '';
         const img = document.createElement('img');
         img.src = image;
-        img.alt = 'Character';
-        img.onclick = function() {
-            selectCharacter(image);
-        };
-        characterImagesDiv.appendChild(img);
-    });
-    characterSelectionDiv.appendChild(characterImagesDiv);
-
-    const playerNameLabel = document.createElement('label');
-    playerNameLabel.setAttribute('for', 'player-name');
-    playerNameLabel.textContent = 'Enter your name: ';
-    characterSelectionDiv.appendChild(playerNameLabel);
-
-    const playerNameInput = document.createElement('input');
-    playerNameInput.type = 'text';
-    playerNameInput.id = 'player-name';
-    characterSelectionDiv.appendChild(playerNameInput);
-
-    const startGameButton = document.createElement('button');
-    startGameButton.textContent = 'Start Game';
-    startGameButton.onclick = startGame;
-    characterSelectionDiv.appendChild(startGameButton);
-
-    const gameWindow = document.getElementById('game-window');
-    gameWindow.innerHTML = ''; // Clear existing content
-    gameWindow.appendChild(characterSelectionDiv);
-}
-
-// Initialize character selection interface
-renderCharacterSelection();
-
-let selectedCharacter = '';
-let playerName = '';
-
-// Function to select a character
-function selectCharacter(image) {
-    selectedCharacter = image;
-}
-
-// Function to start the game
-function startGame() {
-    playerName = document.getElementById('player-name').value;
-    if (!playerName) {
-        alert('Please enter your name.');
-        return;
+        img.alt = 'Dynamic Scene';
+        imageContainer.appendChild(img);
     }
-    if (!selectedCharacter) {
-        alert('Please select a character.');
-        return;
-    }
-
 }
 
-encounter();
+function renderButtons() {
+    if (buttonField) {
+        buttonField.innerHTML = '';
+        if (gameState === 'attack') {
+            ['Attack', 'Run'].forEach(action => {
+                const button = document.createElement('button');
+                button.textContent = action;
+                button.addEventListener('click', action === 'Attack' ? attack : run);
+                buttonField.appendChild(button);
+            });
+        }
+    }
+}
+
+function renderGameText(text) {
+    if (gameTextField) gameTextField.innerHTML = `<p>${text}</p>`;
+}
+
+function renderStats() {
+    if (statsField) {
+        statsField.innerHTML = `
+            <p>Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}</p>
+            <p>Monster - Name: ${currentMonster.name}, Level: ${currentMonster.level}, HP: ${currentMonster.healthPoints}, Gold: ${currentMonster.gold}</p>
+        `;
+    }
+}
+
+function gameOver(isVictory) {
+    gameState = 'end';
+    renderImage(isVictory ? 'img/images/VictoryScroll.jpg' : 'img/images/MonsterDefeated.jpg');
+    renderGameText(isVictory ? 'Congratulations! You won!' : 'Game Over. You were defeated.');
+    buttonField.innerHTML = ''; // Clear buttons
+    // Add a play again button
+    const playAgainButton = document.createElement('button');
+    playAgainButton.textContent = 'Play Again';
+    playAgainButton.addEventListener('click', resetGame);
+    buttonField.appendChild(playAgainButton);
+}
+
+function resetGame() {
+    playerCharacter = new Character(playerName, 20, 0, 0, 1, selectedCharacter);
+    currentMonster = new Monster('Goblin', 10, 5, 2);
+    gameState = 'attack';
+    encounter();
+}
+
+function run() {
+    const diceRoll = dice(1, 6);
+    if (diceRoll >= 4) {
+        renderGameText("You've successfully run away!");
+        resetGame(); // Reset or go to a safe state
+    } else {
+        renderGameText("You failed to run away, the monster attacks!");
+        monsterPhase();
+    }
+}
+
+function attack() {
+    const hitChance = dice(1, 6) + playerCharacter.level;
+    if (hitChance > currentMonster.level) {
+        const damage = dice(1, 4) + playerCharacter.level;
+        currentMonster.healthPoints -= damage;
+        renderGameText(`You hit the ${currentMonster.name} for ${damage} damage.`);
+        if (currentMonster.healthPoints <= 0) {
+            playerCharacter.gold += currentMonster.gold;
+            playerCharacter.xp += currentMonster.level * 5;
+            gameOver(true);
+        } else {
+            monsterPhase();
+        }
+    } else {
+        renderGameText("You missed!");
+        monsterPhase();
+    }
+}
+
+function monsterPhase() {
+    const damage = dice(1, 4);
+    playerCharacter.healthPoints -= damage;
+    renderGameText(`The ${currentMonster.name} hits you for ${damage} damage.`);
+    if (playerCharacter.healthPoints <= 0) {
+        gameOver(false);
+    } else {
+        renderButtons(); // Allow the player to choose their next action
+    }
+}
+
+function encounter() {
+    gameState = 'attack';
+    currentMonster = new Monster('Goblin', 10, 5, 2); // Example monster for new encounters
+    renderImage('img/images/Monster3.jpg');
+    renderGameText('A wild monster appears! What will you do?');
+    renderButtons();
+    renderStats();
+}
+
+function renderCharacterSelection() {
+  gameState = 'start';
+  gameWindow.innerHTML = '<h2>Select Your Character</h2>';
+  const form = document.createElement('form');
+  characterImages.forEach((image, index) => {
+      const label = document.createElement('label');
+      label.className = 'character-option';
+
+      const radioInput = document.createElement('input');
+      radioInput.type = 'radio';
+      radioInput.name = 'character';
+      radioInput.value = image;
+      radioInput.id = `character-${index}`;
+
+      const img = document.createElement('img');
+      img.src = image;
+      img.alt = `Character ${index}`;
+      img.className = 'character-image';
+
+      label.appendChild(radioInput);
+      label.appendChild(img);
+      form.appendChild(label);
+  });
+
+  const nameInput = document.createElement('input');
+  nameInput.placeholder = 'Enter your name';
+  nameInput.id = 'player-name';
+  form.appendChild(nameInput);
+
+  const startGameButton = document.createElement('button');
+  startGameButton.type = 'button'; // Prevent form submission
+  startGameButton.textContent = 'Start Game';
+  startGameButton.addEventListener('click', () => {
+      playerName = nameInput.value.trim();
+      if (!playerName) {
+          alert('Please enter your name.');
+          return;
+      }
+      const selected = document.querySelector('input[name="character"]:checked');
+      if (!selected) {
+          alert('Please select a character.');
+          return;
+      }
+      selectedCharacter = selected.value;
+      playerCharacter = new Character(playerName, 20, 0, 0, 1, selectedCharacter);
+      gameWindow.innerHTML = '';
+      encounter(); // Begin the encounter
+  });
+  form.appendChild(startGameButton);
+
+  gameWindow.appendChild(form);
+}
+
+
+// Initialize the game
+window.onload = renderCharacterSelection;
