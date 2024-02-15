@@ -61,9 +61,17 @@ function renderGameText(text) {
 function renderStats() {
   const statsField = document.getElementById('character-stats');
   statsField.innerHTML = '';
+
+
   const playerStats = document.createElement('p');
   playerStats.textContent = `Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}`;
   statsField.appendChild(playerStats);
+
+
+  const playerStats = document.createElement('p');
+  playerStats.textContent = `Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}`;
+  statsField.appendChild(playerStats);
+
   if (currentMonster) {
     const monsterStats = document.createElement('p');
     monsterStats.textContent = `Monster - Name: ${currentMonster.name}, Level: ${currentMonster.level}, HP: ${currentMonster.healthPoints}, Gold: ${currentMonster.gold}`;
@@ -78,7 +86,11 @@ function gameOver(isVictory) {
     renderImage('img/images/VictoryScroll.jpg');
     renderGameText('Congratulations! You won!');
   } else {
+
+    renderImage('img/images/WeaponKilij.jpg'); 
+
     renderImage('img/images/MonsterDefeated.jpg');
+
     renderGameText('Game Over. You were defeated.');
   }
   const playAgainButton = document.createElement('button');
