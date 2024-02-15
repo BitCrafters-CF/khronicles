@@ -1,28 +1,28 @@
 'use strict';
 
 function dice(min, max) {
-  const minCeil = Math.ceil(min);
-  const maxFloor = Math.floor(max);
-  return Math.floor(Math.random() * (maxFloor - minCeil + 1) + minCeil);
+    const minCeil = Math.ceil(min);
+    const maxFloor = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloor - minCeil + 1) + minCeil);
 }
 
 class Character {
-  constructor(name, healthPoints, gold, xp, level) {
-    this.name = name;
-    this.healthPoints = healthPoints;
-    this.gold = gold;
-    this.xp = xp;
-    this.level = level;
-  }
+    constructor(name, healthPoints, gold, xp, level) {
+        this.name = name;
+        this.healthPoints = healthPoints;
+        this.gold = gold;
+        this.xp = xp;
+        this.level = level;
+    }
 }
 
 class Monster {
-  constructor(name, healthPoints, gold, level) {
-    this.name = name;
-    this.healthPoints = healthPoints;
-    this.gold = gold;
-    this.level = level;
-  }
+    constructor(name, healthPoints, gold, level) {
+        this.name = name;
+        this.healthPoints = healthPoints;
+        this.gold = gold;
+        this.level = level;
+    }
 }
 
 let playerCharacter = new Character('Bob', 10, 10, 0, 1);
@@ -30,35 +30,35 @@ let currentMonster = new Monster('Giant', 15, 20, 5);
 let gameState = 'attack';
 
 function renderImage(image) {
-  const imageContainer = document.getElementById('dynamic-image');
-  imageContainer.innerHTML = '';
-  const img = document.createElement('img');
-  img.src = image;
-  img.alt = 'Dynamic Scene';
-  imageContainer.appendChild(img);
+    const imageContainer = document.getElementById('dynamic-image');
+    imageContainer.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = image;
+    img.alt = 'Dynamic Scene';
+    imageContainer.appendChild(img);
 }
 
 function renderButtons() {
-  const buttonField = document.getElementById('game-buttons');
-  buttonField.innerHTML = '';
+    const buttonField = document.getElementById('game-buttons');
+    buttonField.innerHTML = '';
 
-  if (gameState === 'attack') {
-    const buttonFunctions = ['Attack', 'Dodge', 'Run'];
-    buttonFunctions.forEach(action => {
-      const button = document.createElement('button');
-      button.textContent = action;
-      button.onclick = () => {
-        if (action === 'Attack') {
-          attack();
-        } else if (action === 'Run') {
-          run();
-        }
-        // Future implementation for Dodge
-      };
-      buttonField.appendChild(button);
-    });
-  }
+    if (gameState === 'attack') {
+        const buttonFunctions = ['Attack', 'Run'];
+        buttonFunctions.forEach(action => {
+            const button = document.createElement('button');
+            button.textContent = action;
+            button.onclick = () => {
+                if (action === 'Attack') {
+                    attack();
+                } else if (action === 'Run') {
+                    run();
+                }
+            };
+            buttonField.appendChild(button);
+        });
+    }
 }
+
 
 function renderGameText(text) {
   const gameTextField = document.getElementById('game-text');
@@ -86,14 +86,21 @@ function renderStats() {
 function gameOver(isVictory) {
   document.getElementById('game-buttons').innerHTML = '';
   document.getElementById('character-stats').innerHTML = '';
-  
-  renderGameText(isVictory ? 'Congratulations! You won!' : 'Game Over. You were defeated.');
+
+  // Display relevant image
+  if (isVictory) {
+    renderImage('img/images/VictoryScroll.jpg');
+    renderGameText('Congratulations! You won!'); 
+  } else {
+    renderImage('img/images/MonsterDefeated.jpg'); 
+    renderGameText('Game Over. You were defeated.');
+  }
 
   const playAgainButton = document.createElement('button');
   playAgainButton.textContent = 'Play Again';
   playAgainButton.onclick = resetGame;
   document.getElementById('game-buttons').appendChild(playAgainButton);
-}
+} 
 
 function resetGame() {
   playerCharacter = new Character('Bob', 10, 10, 0, 1);
@@ -107,6 +114,7 @@ function run() {
   const diceRoll = dice(1, 6);
   if (diceRoll >= 4) {
     renderGameText("You have successfully run away!");
+    renderImage('img/images/RunningFromMonsterHajduk.jpg');
     renderNewGameButton();
   } else {
     renderGameText("You failed to run away. Monster's turn!");
@@ -133,11 +141,12 @@ function attack() {
         const damage = dice(1, 4) + playerCharacter.level;
         currentMonster.healthPoints = Math.max(0, currentMonster.healthPoints - damage); // Prevent monster health from going below 0
         renderGameText(`You've attacked the ${currentMonster.name} for ${damage} damage!`);
+        renderImage('img/images/FightingMonsterHajduk.jpg');
     
         if (currentMonster.healthPoints <= 0) {
-          renderGameText('You have defeated the monster!'); // Monster defeated!
-          renderNewGameButton(); // Display the "New Game" button
-          return; // End the turn sequence
+          renderGameText('You have defeated the monster!'); 
+          gameOver(true);  // Call gameOver with 'true' for victory
+          return;
         }
     } else {
       renderGameText(`You missed the ${currentMonster.name}!`);
@@ -155,15 +164,14 @@ function attack() {
     document.getElementById('game-buttons').innerHTML = ''; 
   
     const damage = dice(1, 4);
-  playerCharacter.healthPoints = Math.max(0, playerCharacter.healthPoints - damage); // Prevent player health from going below 0
-  renderGameText(`The ${currentMonster.name} attacks you for ${damage} damage!`);
+    playerCharacter.healthPoints = Math.max(0, playerCharacter.healthPoints - damage); // Prevent player health from going below 0
+    renderGameText(`The ${currentMonster.name} attacks you for ${damage} damage!`);
 
-  if (playerCharacter.healthPoints <= 0) {
-    renderGameText('You have been defeated!'); // Player defeated
-    renderNewGameButton(); // Display the "New Game" button
-    return; // End the turn sequence
-  }
-  
+    if (playerCharacter.healthPoints <= 0) {
+      renderGameText('You have been defeated!'); 
+      gameOver(false); // Call gameOver with 'false' for defeat
+      return; 
+    }
     // Update the stats before returning the player to actions
     renderStats();  
     renderNextButton('Next', renderButtons); 
