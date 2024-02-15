@@ -3,11 +3,16 @@
     margin: 0;
     padding: 0;
 } */
+body {
+    background-image: url(/img/images/bkg-5.jpg);
+    background-size: cover;
+    background-position: center;
+}
 #nav-main {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(1, 1fr);
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.75);
     height: fit-content;
     padding-top: 20px;
     padding-bottom: none;
@@ -29,7 +34,9 @@
     max-width: 100%;
 }
 @media screen and (max-width: 850px) {
-    max-height: 100px;
+    #nav-logo-header img {
+        max-height: 100px;
+    }
 }
 #nav-menu {
     grid-column: 5 / 6;
@@ -41,7 +48,7 @@
 }
 #nav-menu a {
     display: flex;
-    color: white;
+    color: rgb(219, 163, 72);
     justify-content: right;
     font-family: "Caveat Brush", cursive;
     font-weight: 400;
@@ -51,8 +58,7 @@
 #nav-quote {
     display: flex;
     justify-content: center;
-    background-color: black;
-    color: rgb(219, 163, 72);
+    background-color: rgba(0, 0, 0, 0.75);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     font-family: "Caveat Brush", cursive;
@@ -62,12 +68,15 @@
     margin-top: none;
     height: fit-content;
 }
+#nav-quote h2 {
+    color: rgb(219, 163, 72);
+}
 #game-image {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
     margin-top: 20px;
-    background-color: rgb(122, 24, 24);
+    background-color: rgba(122, 24, 24, 0.75);
     border-radius: 10px;
 }
 #game-text {
@@ -137,7 +146,7 @@
     margin-top: 20px;
     margin-bottom: 10px;
     grid-row-gap: 20px;
-    background-color: rgb(219, 163, 72);
+    background-color: rgba(219, 163, 72, 0.80);
     border-radius: 10px;
 }
 footer {
