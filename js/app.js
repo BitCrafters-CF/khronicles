@@ -122,24 +122,17 @@ function renderButtons() {
 }
 
 function renderStats() {
-  gameElements.statsField.innerHTML = `
-    <p>Player - ${playerCharacter.name}, HP: ${playerCharacter.healthPoints}</p>
-    <p>Monster - ${currentMonster.name}, HP: ${currentMonster.healthPoints}</p>
-  `;
-}
-
-function playerAttack() {
-  const hitChance = dice(1, 6) + playerCharacter.level;
-  if (hitChance > currentMonster.level) {
-    const damage = dice(1, 4) + playerCharacter.level;
-    currentMonster.healthPoints -= damage;
-    renderGameText(`You hit the ${currentMonster.name} for ${damage} damage.`);
-    if (currentMonster.healthPoints <= 0) {
-      gameOver(true);
-    } else      monsterAttack();
-  } else {
-    renderGameText("You missed!");
-    monsterAttack();
+  const statsField = document.getElementById('character-stats');
+  statsField.innerHTML = '';
+  
+  const playerStats = document.createElement('p');
+  playerStats.textContent = `Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}`;
+  statsField.appendChild(playerStats);
+  
+  if (currentMonster) {
+    const monsterStats = document.createElement('p');
+    monsterStats.textContent = `Monster - Name: ${currentMonster.name}, Level: ${currentMonster.level}, HP: ${currentMonster.healthPoints}, Gold: ${currentMonster.gold}`;
+    statsField.appendChild(monsterStats);
   }
 }
 
@@ -148,17 +141,30 @@ function playerRun() {
     renderGameText("You successfully escaped!");
     setTimeout(initializeGame, 2000); // Reinitialize the game after a short delay
   } else {
-    renderGameText("You failed to escape and the monster attacks!");
-    monsterAttack();
+    renderImage('img/images/MonsterDefeated.jpg'); 
+    renderGameText('Game Over. You were defeated.');
   }
+
+  const playAgainButton = document.createElement('button');
+  playAgainButton.textContent = 'Play Again';
+  playAgainButton.onclick = resetGame;
+  document.getElementById('game-buttons').appendChild(playAgainButton);
+} 
+
+function resetGame() {
+  playerCharacter = new Character('Bob', 10, 10, 0, 1);
+  currentMonster = new Monster('Giant', 15, 20, 5);
+  gameState = 'attack';
+
+  encounter();
 }
 
-function monsterAttack() {
-  const damage = dice(1, 4);
-  playerCharacter.healthPoints -= damage;
-  renderGameText(`The ${currentMonster.name} attacks you for ${damage} damage.`);
-  if (playerCharacter.healthPoints <= 0) {
-    gameOver(false);
+function run() {
+  const diceRoll = dice(1, 6);
+  if (diceRoll >= 4) {
+    renderGameText("You have successfully run away!");
+    renderImage('img/images/RunningFromMonsterHajduk.jpg');
+    renderNewGameButton();
   } else {
     renderButtons(); // Give player the option to attack again or run
   }
