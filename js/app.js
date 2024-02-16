@@ -181,4 +181,5 @@ function encounter() {
   renderButtons();
   renderStats();
 }
+
 encounter();
