@@ -71,12 +71,6 @@ function renderStats() {
   statsField.appendChild(playerStats);
 
 
-  
-  const playerStats = document.createElement('p');
-  playerStats.textContent = `Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}`;
-  statsField.appendChild(playerStats);
-  
-
   if (currentMonster) {
     const monsterStats = document.createElement('p');
     monsterStats.textContent = `Monster - Name: ${currentMonster.name}, Level: ${currentMonster.level}, HP: ${currentMonster.healthPoints}, Gold: ${currentMonster.gold}`;
