@@ -1,5 +1,5 @@
-
 'use strict';
+
 function dice(min, max) {
     const minCeil = Math.ceil(min);
     const maxFloor = Math.floor(max);
@@ -52,7 +52,6 @@ function renderButtons() {
         });
     }
 }
-
 function renderGameText(text) {
   const gameTextField = document.getElementById('game-text');
   gameTextField.innerHTML = '';
@@ -126,7 +125,7 @@ function attack() {
     if (diceRoll + accuracyThreshold > defense) {
         const damage = dice(1, 4) + playerCharacter.level;
         currentMonster.healthPoints = Math.max(0, currentMonster.healthPoints - damage); // Prevent monster health from going below 0
-        renderGameText(`You've attacked the ${currentMonster.name} for ${damage} damage!`);
+        renderGameText(`You have rolled ${diceRoll}. You've attacked the ${currentMonster.name} for ${damage} damage!`);
         renderImage('img/images/FightingMonsterHajduk.jpg');
     
         if (currentMonster.healthPoints <= 0) {
@@ -143,9 +142,8 @@ function attack() {
   
     // Initiate the monster's turn with a 'Next' button
     renderNextButton('Next', monsterPhase); 
-  }
-  
-  function monsterPhase() {
+}  
+function monsterPhase() {
     // Remove the 'Next' button
     document.getElementById('game-buttons').innerHTML = ''; 
   
@@ -160,7 +158,7 @@ function attack() {
     // Update the stats before returning the player to actions
     renderStats();  
     renderNextButton('Next', renderButtons); 
-  }
+}
 function renderNextButton(label, action) {
   const buttonField = document.getElementById('game-buttons');
   buttonField.innerHTML = '';
