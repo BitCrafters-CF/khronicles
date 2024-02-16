@@ -164,3 +164,16 @@ footer {
     font-style: normal;
     font-size: 15px;
 }
+#about-us {
+    background-color: rgba(122, 24, 24, 0.75);
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+    color: rgb(219, 163, 72);
+    font-family: "Caveat Brush", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
