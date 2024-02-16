@@ -106,12 +106,19 @@ body {
 #character-stats {
     display: flex;
     justify-content: center;
+
     align-items: center; /* Vertically center */
     font-family: 'Arial Black', sans-serif;
     font-size: 20px; /* Adjust font size for better fit */
     color: rgb(92, 15, 14);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     justify-content: space-evenly;
+
+
+    font-family: 'Arial Black', sans-serif; 
+    font-size: 24px; 
+    color: rgb(92, 15, 14); 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 
 }
 #game-buttons {
@@ -128,7 +135,12 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+
     transition: background-color 0.7s ease-in-out;
+
+    justify-content: center;
+    transition: background-color 0.7s ease-in-out; 
+
 }
 
 #game-buttons button:hover {

@@ -1,3 +1,4 @@
+
 'use strict';
 function dice(min, max) {
     const minCeil = Math.ceil(min);
@@ -51,6 +52,7 @@ function renderButtons() {
         });
     }
 }
+
 function renderGameText(text) {
   const gameTextField = document.getElementById('game-text');
   gameTextField.innerHTML = '';
@@ -63,9 +65,17 @@ function renderStats() {
   statsField.innerHTML = '';
 
 
+
   const playerStats = document.createElement('p');
   playerStats.textContent = `Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}`;
   statsField.appendChild(playerStats);
+
+
+  
+  const playerStats = document.createElement('p');
+  playerStats.textContent = `Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}`;
+  statsField.appendChild(playerStats);
+  
 
   if (currentMonster) {
     const monsterStats = document.createElement('p');
@@ -79,20 +89,16 @@ function gameOver(isVictory) {
   // Display relevant image
   if (isVictory) {
     renderImage('img/images/VictoryScroll.jpg');
-    renderGameText('Congratulations! You won!');
+    renderGameText('Congratulations! You won!'); 
   } else {
-
-    renderImage('img/images/WeaponKilij.jpg'); 
-
-    renderImage('img/images/MonsterDefeated.jpg');
-
+    renderImage('img/images/MonsterDefeated.jpg'); 
     renderGameText('Game Over. You were defeated.');
   }
   const playAgainButton = document.createElement('button');
   playAgainButton.textContent = 'Play Again';
   playAgainButton.onclick = resetGame;
   document.getElementById('game-buttons').appendChild(playAgainButton);
-}
+} 
 function resetGame() {
   playerCharacter = new Character('Bob', 10, 10, 0, 1);
   currentMonster = new Monster('Giant', 15, 20, 5);
@@ -122,38 +128,44 @@ function attack() {
     const diceRoll = dice(1, 6);
     const accuracyThreshold = 10 + playerCharacter.level;
     const defense = currentMonster.level;
+  
     if (diceRoll + accuracyThreshold > defense) {
         const damage = dice(1, 4) + playerCharacter.level;
         currentMonster.healthPoints = Math.max(0, currentMonster.healthPoints - damage); // Prevent monster health from going below 0
         renderGameText(`You've attacked the ${currentMonster.name} for ${damage} damage!`);
         renderImage('img/images/FightingMonsterHajduk.jpg');
+    
         if (currentMonster.healthPoints <= 0) {
-          renderGameText('You have defeated the monster!');
+          renderGameText('You have defeated the monster!'); 
           gameOver(true);  // Call gameOver with 'true' for victory
           return;
         }
     } else {
       renderGameText(`You missed the ${currentMonster.name}!`);
     }
+  
     // Remove previous action buttons
-    document.getElementById('game-buttons').innerHTML = '';
+    document.getElementById('game-buttons').innerHTML = ''; 
+  
     // Initiate the monster's turn with a 'Next' button
-    renderNextButton('Next', monsterPhase);
+    renderNextButton('Next', monsterPhase); 
   }
+  
   function monsterPhase() {
     // Remove the 'Next' button
-    document.getElementById('game-buttons').innerHTML = '';
+    document.getElementById('game-buttons').innerHTML = ''; 
+  
     const damage = dice(1, 4);
     playerCharacter.healthPoints = Math.max(0, playerCharacter.healthPoints - damage); // Prevent player health from going below 0
     renderGameText(`The ${currentMonster.name} attacks you for ${damage} damage!`);
     if (playerCharacter.healthPoints <= 0) {
-      renderGameText('You have been defeated!');
+      renderGameText('You have been defeated!'); 
       gameOver(false); // Call gameOver with 'false' for defeat
-      return;
+      return; 
     }
     // Update the stats before returning the player to actions
-    renderStats();
-    renderNextButton('Next', renderButtons);
+    renderStats();  
+    renderNextButton('Next', renderButtons); 
   }
 function renderNextButton(label, action) {
   const buttonField = document.getElementById('game-buttons');
@@ -170,8 +182,3 @@ function encounter() {
   renderStats();
 }
 encounter();
-
-
-
-
-
