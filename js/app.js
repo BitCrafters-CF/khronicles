@@ -1,4 +1,3 @@
-
 'use strict';
 function dice(min, max) {
     const minCeil = Math.ceil(min);
@@ -70,12 +69,6 @@ function renderStats() {
   playerStats.textContent = `Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}`;
   statsField.appendChild(playerStats);
 
-
-  
-  const playerStats = document.createElement('p');
-  playerStats.textContent = `Player - Name: ${playerCharacter.name}, Level: ${playerCharacter.level}, XP: ${playerCharacter.xp}, HP: ${playerCharacter.healthPoints}`;
-  statsField.appendChild(playerStats);
-  
 
   if (currentMonster) {
     const monsterStats = document.createElement('p');
@@ -181,4 +174,5 @@ function encounter() {
   renderButtons();
   renderStats();
 }
+
 encounter();
